@@ -1,0 +1,19 @@
+@echo off
+echo Installing backend dependencies...
+cd backend
+npm install
+
+echo Installing frontend dependencies...
+cd ../frontend
+npm install
+
+echo Creating MongoDB database and admin user...
+mongosh --eval "use college-sis" --eval "db.users.insertOne({email: 'admin@college.com', password: '$2a$10$zPzKV4q7zd6n6CdV1WJ8Dem9NuFVnlRBtHOrzYR2gw6.3ZLMZK1d2', role: 'admin', createdAt: new Date()})"
+
+echo Starting backend server...
+start cmd /k "cd backend && npm run dev"
+
+echo Starting frontend server...
+start cmd /k "cd frontend && npm run dev"
+
+echo Setup complete! Please wait for the servers to start...
